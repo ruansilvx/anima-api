@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "start": "node ."
+  },
+  "type": "module",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "name": "anima-api",
+  "version": "1.0.0",
+  "description": "A simple API for personal use",
+  "main": "src/server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruansilvx/anima-api.git"
+  },
+  "author": "Ruan Willer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruansilvx/anima-api/issues"
+  },
+  "homepage": "https://github.com/ruansilvx/anima-api#readme"
+}
