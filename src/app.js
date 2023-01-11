@@ -1,9 +1,65 @@
 import express from 'express'
+import { readFile } from 'fs/promises';
 
 const app = express()
 
 export default app
 
+const json = JSON.parse(
+    await readFile(
+        new URL('./public/anime-offline-database/anime-offline-database-minified.json', import.meta.url)
+    )
+);
+
 app.get('/', (req, res) => {
     res.send('Anima API')
+})
+
+// Middleware to handle missing queries redirection
+app.use("/animes", (req, res, next) => {
+    if (!req.query.page) {
+        req.query.page = 1;
+    } else {
+        req.query.page = parseInt(req.query.page, 10);
+        if (!Number.isInteger(req.query.page)) {
+            req.query.page = 1;
+        }
+    }
+
+    if (!req.query.limit) {
+        req.query.limit = 5;
+    } else {
+        req.query.limit = parseInt(req.query.limit, 10);
+        if (!Number.isInteger(req.query.limit)) {
+            req.query.limit = 5;
+        }
+    }
+
+    next();
+});
+
+app.get('/animes', (req, res) => {
+    const objects = Object.entries(json['data'])
+    const page = req.query.page
+    const limit = req.query.limit
+    const startIndex = (page - 1) * limit
+    const endIndex = page * limit
+    const result = objects.slice(startIndex, endIndex)
+    res.json(result)
+})
+
+app.get('/animes/:id', (req, res) => {
+    let result = null
+    for (const [key, value] of Object.entries(json['data'])) {
+        if (key == req.params.id) {
+            result = value
+            break
+        }
+    }
+
+    if (!result) {
+        res.status(404).send('Anime not found.')
+    } else {
+        res.json(result)
+    }
 })
