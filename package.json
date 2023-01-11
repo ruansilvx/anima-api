@@ -12,7 +12,6 @@
   "version": "1.0.0",
   "description": "A simple API for personal use",
   "main": "src/server.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ruansilvx/anima-api.git"
