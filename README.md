@@ -17,7 +17,7 @@ git submodule update --init --recursive
 
 ## Setup the server locally
 
-Be sure to have both [npm](https://www.npmjs.com/package/npm) and [node](https://nodejs.org/en/download/) installed.
+Be sure to have both [npm](https://www.npmjs.com/package/npm) (v9.2.0) and [node](https://nodejs.org/en/download/) (v19.4.0) installed.
 
   ``` 
   npm install
