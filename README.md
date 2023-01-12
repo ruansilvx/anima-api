@@ -2,6 +2,9 @@
 
 This is a simple API for personal use.
 
+## Disclaimer
+
+I am **NOT** a web developer. This project does not follow standards and should not be used as reference.
 
 ## Dependencies
 
