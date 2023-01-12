@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 })
 
 // Middleware to handle missing pagination queries
-app.use("/animes", (req, res, next) => {
+app.use("/anime", (req, res, next) => {
     if (!req.query.page) {
         req.query.page = 1;
     } else {
@@ -38,7 +38,7 @@ app.use("/animes", (req, res, next) => {
     next();
 });
 
-app.get('/animes', (req, res) => {
+app.get('/anime', (req, res) => {
     const objects = Object.entries(json['data'])
 
     const filter = req.query.search?.toLowerCase()
@@ -61,7 +61,7 @@ app.get('/animes', (req, res) => {
     res.json(result)
 })
 
-app.get('/animes/:id', (req, res) => {
+app.get('/anime/:id', (req, res) => {
     let result = null
     for (const [key, value] of Object.entries(json['data'])) {
         if (key == req.params.id) {
