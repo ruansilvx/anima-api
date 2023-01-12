@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.send('Anima API')
 })
 
-// Middleware to handle missing queries redirection
+// Middleware to handle missing pagination queries
 app.use("/animes", (req, res, next) => {
     if (!req.query.page) {
         req.query.page = 1;
@@ -27,11 +27,11 @@ app.use("/animes", (req, res, next) => {
     }
 
     if (!req.query.limit) {
-        req.query.limit = 5;
+        req.query.limit = 10;
     } else {
         req.query.limit = parseInt(req.query.limit, 10);
         if (!Number.isInteger(req.query.limit)) {
-            req.query.limit = 5;
+            req.query.limit = 10;
         }
     }
 
@@ -40,11 +40,18 @@ app.use("/animes", (req, res, next) => {
 
 app.get('/animes', (req, res) => {
     const objects = Object.entries(json['data'])
+
+    const filteredObjects = objects.filter(([key, value]) =>
+        value.title.includes(req.query.search)
+    )
+
+    // pagination
     const page = req.query.page
     const limit = req.query.limit
     const startIndex = (page - 1) * limit
     const endIndex = page * limit
-    const result = objects.slice(startIndex, endIndex)
+    const result = filteredObjects.slice(startIndex, endIndex)
+
     res.json(result)
 })
 
