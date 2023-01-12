@@ -41,9 +41,15 @@ app.use("/animes", (req, res, next) => {
 app.get('/animes', (req, res) => {
     const objects = Object.entries(json['data'])
 
-    const filteredObjects = objects.filter(([key, value]) =>
-        value.title.includes(req.query.search)
-    )
+    const filter = req.query.search?.toLowerCase()
+    let filteredObjects = objects
+
+    if (filter) {
+        filteredObjects = objects.filter(([key, value]) =>
+            value.title.toLowerCase().includes(filter) ||
+            value.synonyms.some((synonym) => synonym.toLowerCase().includes(filter))
+        )
+    }
 
     // pagination
     const page = req.query.page
